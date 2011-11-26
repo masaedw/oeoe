@@ -2,15 +2,16 @@
   (:use clojure.pprint)
   (:use hiccup.core)
   (:use oeoe.views)
+  (:use oeoe.session)
   (:use ring.util.response)
   )
 
 (defn logged-in []
-  true)
+  (:logged-in (get-session)))
 
 (defn index-get [req]
   (if (not (logged-in))
-    (redirect (str "/login/"))
+    (redirect (str "/login"))
     (default-layout
       {:title "index"
        :body [[:h1 "oeoe"]
@@ -23,7 +24,13 @@
 
 
 (defn login-get [req]
-  "login-get"
+  (default-layout
+    {:title "login"
+     :body [[:h1 "oeoe"]
+            [:div
+             [:button {:class "btn primary"} "Login"]
+             "&nbsp;"
+             [:button {:class "btn"} "Cancel"]]]})
   )
 
 
