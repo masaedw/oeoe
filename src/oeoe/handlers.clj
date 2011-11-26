@@ -1,6 +1,7 @@
 (ns oeoe.handlers
   (:use clojure.pprint)
   (:use hiccup.core)
+  (:use hiccup.form-helpers)
   (:use oeoe.views)
   (:use oeoe.session)
   (:use ring.util.response)
@@ -27,15 +28,23 @@
   (default-layout
     {:title "login"
      :body [[:h1 "oeoe"]
-            [:div
-             [:button {:class "btn primary"} "Login"]
-             "&nbsp;"
-             [:button {:class "btn"} "Cancel"]]]})
+            (form-to [:post "/login"]
+                     [:div {:class "clearfix"}
+                      (label :name "name")
+                      [:div {:class "input"}
+                       (text-field :name "")]]
+                     [:div {:class "actions"}
+                      [:button {:type "submit" :class "btn primary"} "login"]
+                      "&nbsp;"
+                      [:button {:type "reset" :class "btn"} "cancel"]])]})
   )
 
 
 (defn login-post [req]
-  "login-post"
+  (default-layout
+    {:title "login"
+     :body [[:h1 "oeoe"]
+            [:pre (escape-html (with-out-str (pprint req)))]]})
   )
 
 
