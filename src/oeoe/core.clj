@@ -1,4 +1,6 @@
 (ns oeoe.core
+  (:use compojure.core)
+  (:use compojure.handler)
   (:use oeoe.routes)
   )
 
