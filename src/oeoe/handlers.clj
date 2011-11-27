@@ -2,8 +2,8 @@
   (:use clojure.pprint)
   (:use hiccup.core)
   (:use hiccup.form-helpers)
-  (:use oeoe.views)
   (:use oeoe.session)
+  (:use oeoe.views)
   (:use ring.util.response)
   )
 
@@ -41,11 +41,9 @@
 
 
 (defn login-post [req]
-  (default-layout
-    {:title "login"
-     :body [[:h1 "oeoe"]
-            [:pre (escape-html (with-out-str (pprint req)))]]})
-  )
+  (->> (get-in req [:params :name])
+       (assoc (get-session) :logged-in)
+       (assoc (redirect "/") :session)))
 
 
 (defn callback-get [req]
