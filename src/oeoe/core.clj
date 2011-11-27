@@ -1,6 +1,5 @@
 (ns oeoe.core
-  (:use oeoe.routes
-        )
+  (:use oeoe.routes)
   )
 
 (defn wrap-charset [handler charset]
