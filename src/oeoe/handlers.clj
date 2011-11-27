@@ -16,6 +16,9 @@
     (default-layout
       {:title "index"
        :body [[:h1 "oeoe"]
+              (form-to [:post "/"]
+                       [:div {:class "actions"}
+                        [:button {:type "submit" :class "btn primary"} "oe〜"]])
               [:pre (escape-html (with-out-str (pprint req)))]]})))
 
 
