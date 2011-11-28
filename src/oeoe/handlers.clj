@@ -2,7 +2,9 @@
   (:use clojure.pprint)
   (:use hiccup.core)
   (:use hiccup.form-helpers)
+  (:use oeoe.config)
   (:use oeoe.session)
+  (:use oeoe.twitter)
   (:use oeoe.util)
   (:use oeoe.views)
   (:use ring.util.response)
@@ -73,9 +75,7 @@
 
 
 (defn login-post [req]
-  (->> (get-in req [:params :name])
-       (assoc (get-session) :logged-in)
-       (assoc (redirect "/") :session)))
+  (redirect twitter-oauth-url))
 
 
 (defn logout-post [req]
@@ -84,5 +84,7 @@
 
 
 (defn callback-get [req]
-  "callback-get"
-  )
+  (default-layout
+    {:title "callback"
+     :body [[:h1 "oeoe"]
+            [:pre (escape-html (with-out-str (pprint req)))]]}))

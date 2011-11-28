@@ -4,6 +4,7 @@
                  [compojure "0.6.5"]
                  [hiccup "0.3.7"]
                  [ring "0.3.11"]
+                 [twitter-api "0.6.3"]
                  ]
   :dev-dependencies [[lein-ring "0.4.5"]]
   :ring {:handler oeoe.core/oeoe-site}
