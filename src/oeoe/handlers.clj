@@ -25,7 +25,9 @@
              [:div {:class "span8"}
               "oeoe"
               (form-to [:post "/"]
-                       [:button {:type "submit" :class "btn primary" :disabled (str (not logged-in))} "oe〜"])]]
+                       [:button (if (logged-in)
+                                  {:type "submit" :class "btn primary"}
+                                  {:type "submit" :class "btn primary" :disabled "disabled"}) "oe〜"])]]
             [:pre (escape-html (with-out-str (pprint req)))]]}))
 
 
