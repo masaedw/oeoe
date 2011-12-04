@@ -8,12 +8,15 @@
   (:use oeoe.util)
   (:use oeoe.views)
   (:use ring.util.response)
+  (:use [twitter.oauth :only [make-oauth-creds]])
+  (:use [twitter.api.restful])
+  (:import java.util.Calendar)
   )
 
 (defn logged-in []
   (:logged-in (get-session)))
 
-(declare login-logout-form)
+(declare login-logout-form make-creds)
 
 (defn index-get [req]
   (default-layout
@@ -28,7 +31,8 @@
                        [:button (if (logged-in)
                                   {:type "submit" :class "btn primary"}
                                   {:type "submit" :class "btn primary" :disabled "disabled"}) "oe〜"])]]
-            [:pre (escape-html (with-out-str (pprint req)))]]}))
+            [:pre (escape-html (with-out-str (pprint req)))]
+            [:pre (escape-html (with-out-str (pprint (make-creds req))))]]}))
 
 
 (defn login-form []
@@ -50,9 +54,22 @@
     (login-form)))
 
 
+(defn make-creds [req]
+  (let [{:keys [oauth_token oauth_token_secret]} (get-in req [:session :access-token])]
+    (make-oauth-creds *app-consumer-key*
+                      *app-consumer-secret*
+                      oauth_token
+                      oauth_token_secret)))
+
+
 (defn index-post [req]
-  "index-post"
-  )
+  (let [creds (make-creds req)
+        sec (-> (Calendar/getInstance)
+                (.get Calendar/SECOND))
+        spaces (apply str (take sec (repeat " ")))]
+    (update-status :oauth-creds creds
+                   :params {:status (str "おえおえ〜" spaces ".")})
+    (redirect "/")))
 
 
 (defn login-get [req]
@@ -67,8 +84,7 @@
                      [:div {:class "actions"}
                       [:button {:type "submit" :class "btn primary"} "login"]
                       "&nbsp;"
-                      [:button {:type "reset" :class "btn"} "cancel"]])]})
-  )
+                      [:button {:type "reset" :class "btn"} "cancel"]])]}))
 
 
 (defn login-post [req]
