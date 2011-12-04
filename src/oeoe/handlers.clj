@@ -31,8 +31,8 @@
                        [:button (if (logged-in)
                                   {:type "submit" :class "btn primary"}
                                   {:type "submit" :class "btn primary" :disabled "disabled"}) "oe〜"])]]
-            [:pre (escape-html (with-out-str (pprint req)))]
-            [:pre (escape-html (with-out-str (pprint (make-creds req))))]]}))
+            #_[:pre (escape-html (with-out-str (pprint req)))]
+            #_[:pre (escape-html (with-out-str (pprint (make-creds req))))]]}))
 
 
 (defn login-form []
