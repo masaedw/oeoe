@@ -62,13 +62,23 @@
                       oauth_token_secret)))
 
 
+(defn current-status [user-id]
+  (-> (show-user :params {:user_id user-id})
+      (get-in [:body :status :text])))
+
+
 (defn index-post [req]
   (let [creds (make-creds req)
         sec (-> (Calendar/getInstance)
                 (.get Calendar/SECOND))
         spaces (apply str (take sec (repeat " ")))]
-    (update-status :oauth-creds creds
-                   :params {:status (str "おえおえ〜" spaces ".")})
+    (try
+      (update-status :oauth-creds creds
+                     :params {:status (str "おえおえ〜" spaces ".")})
+      (catch Exception ex
+        (let [status (current-status (get-in (get-session) [:access-token :user_id]))]
+          (update-status :oauth-creds creds
+                         :params {:status (str status ".")}))))
     (redirect "/")))
 
 
