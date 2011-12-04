@@ -2,6 +2,7 @@
   (:use compojure.core)
   (:use compojure.handler)
   (:use oeoe.routes)
+  (:use ring.adapter.jetty)
   )
 
 (defn wrap-charset [handler charset]
@@ -18,3 +19,7 @@
 (wrap! oeoe (:charset "utf8"))
 
 (def oeoe-site (site oeoe))
+
+(defn -main []
+  (let [port (Integer/parseInt (System/getenv "PORT"))]
+    (run-jetty oeoe-site {:port port})))
