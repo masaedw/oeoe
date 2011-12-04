@@ -25,18 +25,13 @@
              [:div {:class "span8"}
               "oeoe"
               (form-to [:post "/"]
-                       [:button {:type "submit" :class "btn primary"} "oe〜"])]]
+                       [:button {:type "submit" :class "btn primary" :disabled (str (not logged-in))} "oe〜"])]]
             [:pre (escape-html (with-out-str (pprint req)))]]}))
 
 
 (defn login-form []
   (-> (form-to [:post "/login"]
-               [:div {:class "clearfix"}
-                (label :name "name")
-                [:div {:class "input"}
-                 (-> (text-field :name "")
-                     (add-class "medium"))]]
-               [:button {:type "submit" :class "btn"} "login"])
+               [:button {:type "submit" :class "btn"} "login with twitter"])
       (add-class "form-stacked")))
 
 
@@ -75,16 +70,25 @@
 
 
 (defn login-post [req]
-  (redirect twitter-oauth-url))
+  (let [c (twitter-consumer)
+        rt (twitter-request-token c)
+        uri (twitter-user-approval-uri c rt)]
+    (->> {:request-token rt}
+         (merge (get-session))
+         (assoc (redirect uri) :session))))
 
 
 (defn logout-post [req]
-  (->> (dissoc (get-session) :logged-in)
-       (assoc (redirect "/") :session)))
+  (assoc (redirect "/") :session {}))
 
 
 (defn callback-get [req]
-  (default-layout
-    {:title "callback"
-     :body [[:h1 "oeoe"]
-            [:pre (escape-html (with-out-str (pprint req)))]]}))
+  (let [verifier (get-in req [:params :oauth_verifier])
+        token (get-in req [:params :oauth_token])
+        request-token (:request-token (get-session))
+        consumer (twitter-consumer)
+        access-token (twitter-access-token consumer request-token verifier)]
+    (->> {:access-token access-token
+          :logged-in (:screen_name access-token)}
+         (merge (get-session))
+         (assoc (redirect "/") :session))))
