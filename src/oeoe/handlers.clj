@@ -4,7 +4,7 @@
    [hiccup.core]
    [hiccup.form-helpers]
    [oeoe.config]
-   [oeoe.session]
+   [oeoe.middleware]
    [oeoe.twitter]
    [oeoe.util]
    [oeoe.views]
