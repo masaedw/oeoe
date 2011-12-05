@@ -1,15 +1,17 @@
 (ns oeoe.handlers
-  (:use clojure.pprint)
-  (:use hiccup.core)
-  (:use hiccup.form-helpers)
-  (:use oeoe.config)
-  (:use oeoe.session)
-  (:use oeoe.twitter)
-  (:use oeoe.util)
-  (:use oeoe.views)
-  (:use ring.util.response)
-  (:use [twitter.oauth :only [make-oauth-creds]])
-  (:use [twitter.api.restful])
+  (:use
+   [clojure.pprint]
+   [hiccup.core]
+   [hiccup.form-helpers]
+   [oeoe.config]
+   [oeoe.session]
+   [oeoe.twitter]
+   [oeoe.util]
+   [oeoe.views]
+   [ring.util.response]
+   [twitter.api.restful]
+   [twitter.oauth :only [make-oauth-creds]]
+   )
   (:import java.util.Calendar)
   )
 

@@ -1,8 +1,10 @@
 (ns oeoe.routes
-  (:use compojure.core)
-  (:use compojure.route)
-  (:use oeoe.handlers)
-  (:use oeoe.session)
+  (:use
+   [compojure.core]
+   [compojure.route]
+   [oeoe.handlers]
+   [oeoe.session]
+   )
   )
 
 (defroutes oeoe

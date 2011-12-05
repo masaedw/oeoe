@@ -1,5 +1,7 @@
 (ns oeoe.twitter
-  (:use oeoe.config)
+  (:use
+   [oeoe.config]
+   )
   (:require [oauth.client :as oauth])
   )
 

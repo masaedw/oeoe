@@ -1,8 +1,10 @@
 (ns oeoe.core
-  (:use compojure.core)
-  (:use compojure.handler)
-  (:use oeoe.routes)
-  (:use ring.adapter.jetty)
+  (:use
+   [compojure.core]
+   [compojure.handler]
+   [oeoe.routes]
+   [ring.adapter.jetty]
+   )
   )
 
 (defn wrap-charset [handler charset]
