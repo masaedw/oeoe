@@ -8,9 +8,9 @@
 (defn twitter-consumer []
   (oauth/make-consumer *app-consumer-key*
                        *app-consumer-secret*
-                       "http://twitter.com/oauth/request_token"
-                       "http://twitter.com/oauth/access_token"
-                       "http://twitter.com/oauth/authorize"
+                       "https://twitter.com/oauth/request_token"
+                       "https://twitter.com/oauth/access_token"
+                       "https://twitter.com/oauth/authenticate"
                        :hmac-sha1))
 
 (defn twitter-request-token [consumer]
