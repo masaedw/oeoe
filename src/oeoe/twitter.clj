@@ -1,9 +1,6 @@
 (ns oeoe.twitter
-  (:use
-   [oeoe.config]
-   )
-  (:require [oauth.client :as oauth])
-  )
+  (:use [oeoe.config])
+  (:require [oauth.client :as oauth]))
 
 (defn twitter-consumer []
   (oauth/make-consumer *app-consumer-key*
