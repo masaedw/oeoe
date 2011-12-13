@@ -5,7 +5,6 @@
         [oeoe.config]
         [oeoe.middleware :only [get-session]]
         [oeoe.twitter]
-        [oeoe.util]
         [oeoe.views]
         [ring.util.response]
         [twitter.api.restful]
