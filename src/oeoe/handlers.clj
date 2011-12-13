@@ -18,18 +18,21 @@
 (defn logged-in []
   (:logged-in (get-session)))
 
-(declare login-logout-form make-creds)
-
 (defn index-get [req]
   (default-layout
     {:title "oeoe"
      :content [[:h1 "oeoe"]
-               (login-logout-form)
+               (if (logged-in)
+                 [:p "Hi! " (:logged-in (get-session))]
+                 (login-form))
                (form-to [:post "/"]
                         [:button (if (logged-in) {:type "submit"} {:type "submit" :disabled "disabled"})
                          "oe〜"])
                #_[:pre (escape-html (with-out-str (pprint req)))]
-               #_[:pre (escape-html (with-out-str (pprint (make-creds req))))]]}))
+               #_[:pre (escape-html (with-out-str (pprint (make-creds req))))]]
+     :footer [(if (logged-in)
+                (logout-form)
+                (login-form))]}))
 
 
 (defn login-form []
@@ -39,16 +42,8 @@
 
 
 (defn logout-form []
-  [:div {:class "login-logout"}
-   [:p "Hi! " (:logged-in (get-session))]
-   (form-to [:post "/logout"]
-            [:button {:type "submit"} "logout"])])
-
-
-(defn login-logout-form []
-  (if (logged-in)
-    (logout-form)
-    (login-form)))
+  (form-to [:post "/logout"]
+           [:button {:type "submit"} "logout"]))
 
 
 (defn make-creds [req]
