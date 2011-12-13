@@ -22,32 +22,27 @@
 
 (defn index-get [req]
   (default-layout
-    {:title "index"
-     :body [[:h1 "oeoe"]
-            [:div {:class "row"}
-             [:div {:class "span4"}
-              (login-logout-form)]
-             [:div {:class "span8"}
-              "oeoe"
-              (form-to [:post "/"]
-                       [:button (if (logged-in)
-                                  {:type "submit" :class "btn primary"}
-                                  {:type "submit" :class "btn primary" :disabled "disabled"}) "oe〜"])]]
-            #_[:pre (escape-html (with-out-str (pprint req)))]
-            #_[:pre (escape-html (with-out-str (pprint (make-creds req))))]]}))
+    {:title "oeoe"
+     :content [[:h1 "oeoe"]
+               (login-logout-form)
+               (form-to [:post "/"]
+                        [:button (if (logged-in) {:type "submit"} {:type "submit" :disabled "disabled"})
+                         "oe〜"])
+               #_[:pre (escape-html (with-out-str (pprint req)))]
+               #_[:pre (escape-html (with-out-str (pprint (make-creds req))))]]}))
 
 
 (defn login-form []
-  (-> (form-to [:post "/login"]
-               [:button {:type "submit" :class "btn"} "login with twitter"])
-      (add-class "form-stacked")))
+  (form-to {:rel "external" :data-ajax "false"}
+           [:post "/login"]
+           [:button {:type "submit"} "login with twitter"]))
 
 
 (defn logout-form []
   [:div {:class "login-logout"}
    [:p "Hi! " (:logged-in (get-session))]
    (form-to [:post "/logout"]
-            [:button {:type "submit" :class "btn"} "logout"])])
+            [:button {:type "submit"} "logout"])])
 
 
 (defn login-logout-form []
@@ -87,16 +82,12 @@
 (defn login-get [req]
   (default-layout
     {:title "login"
-     :body [[:h1 "oeoe"]
-            (form-to [:post "/login"]
-                     [:div {:class "clearfix"}
-                      (label :name "name")
-                      [:div {:class "input"}
-                       (text-field :name "")]]
-                     [:div {:class "actions"}
-                      [:button {:type "submit" :class "btn primary"} "login"]
-                      "&nbsp;"
-                      [:button {:type "reset" :class "btn"} "cancel"]])]}))
+     :content [[:h1 "oeoe"]
+               (form-to {:class "ui-hide-label"}
+                        [:post "/login"]
+                        (label :name "Screen Name")
+                        (text-field {:placeholer "Screen Name"} :name "")
+                        [:button {:type "submit"} "login"])]}))
 
 
 (defn login-post [req]
