@@ -18,6 +18,18 @@
 (defn logged-in []
   (:logged-in (get-session)))
 
+
+(defn login-form []
+  (form-to {:rel "external" :data-ajax "false"}
+           [:post "/login"]
+           [:button {:type "submit"} "login with twitter"]))
+
+
+(defn logout-form []
+  (form-to [:post "/logout"]
+           [:button {:type "submit"} "logout"]))
+
+
 (defn index-get [req]
   (default-layout
     {:title "oeoe"
@@ -33,17 +45,6 @@
      :footer [(if (logged-in)
                 (logout-form)
                 (login-form))]}))
-
-
-(defn login-form []
-  (form-to {:rel "external" :data-ajax "false"}
-           [:post "/login"]
-           [:button {:type "submit"} "login with twitter"]))
-
-
-(defn logout-form []
-  (form-to [:post "/logout"]
-           [:button {:type "submit"} "logout"]))
 
 
 (defn make-creds [req]
