@@ -23,7 +23,8 @@
 
 
 (defn logout-form []
-  (form-to [:post "/logout"]
+  (form-to {:rel "external" :data-ajax "false"}
+           [:post "/logout"]
            [:button {:type "submit"} "logout"]))
 
 
