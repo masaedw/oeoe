@@ -1,5 +1,4 @@
-(ns oeoe.config
-  )
+(ns oeoe.config)
 
 (defmacro load-env
   [var env]

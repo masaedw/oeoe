@@ -1,11 +1,8 @@
 (ns oeoe.core
-  (:use
-   [compojure.handler :only [site]]
-   [oeoe.routes]
-   [oeoe.middleware]
-   [ring.adapter.jetty :only [run-jetty]]
-   )
-  )
+  (:use [compojure.handler :only [site]]
+        [oeoe.routes]
+        [oeoe.middleware]
+        [ring.adapter.jetty :only [run-jetty]]))
 
 (def oeoe-site
   (-> oeoe

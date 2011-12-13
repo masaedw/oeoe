@@ -1,10 +1,8 @@
 (ns oeoe.routes
-  (:use
-   [compojure.core :only [defroutes GET POST]]
-   [compojure.route :only [not-found]]
-   [oeoe.handlers]
-   )
-  )
+  (:use [compojure.core :only [defroutes GET POST]]
+        [compojure.route :only [not-found]]
+        [oeoe.handlers]))
+
 
 (defroutes oeoe
   (GET  "/" req (index-get req))

@@ -1,5 +1,4 @@
-(ns oeoe.util
-  )
+(ns oeoe.util)
 
 (defn update-attrs [node f]
   (if (map? (get node 1))

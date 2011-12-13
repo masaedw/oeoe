@@ -1,5 +1,4 @@
-(ns oeoe.middleware
-  )
+(ns oeoe.middleware)
 
 (def ^:dynamic session)
 
