@@ -3,6 +3,19 @@
         [hiccup.form-helpers]
         [hiccup.page-helpers]))
 
+
+(defn login-form []
+  (form-to {:rel "external" :data-ajax "false"}
+           [:post "/login"]
+           [:button {:type "submit"} "login with twitter"]))
+
+
+(defn logout-form []
+  (form-to {:rel "external" :data-ajax "false"}
+           [:post "/logout"]
+           [:button {:type "submit"} "logout"]))
+
+
 (defn default-layout [content]
   (html5
    [:head

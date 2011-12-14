@@ -2,6 +2,7 @@
   (:use [clojure.pprint]
         [hiccup.core]
         [hiccup.form-helpers]
+        [mongoika]
         [oeoe.config]
         [oeoe.middleware :only [get-session]]
         [oeoe.twitter]
@@ -14,18 +15,6 @@
 
 (defn logged-in []
   (:logged-in (get-session)))
-
-
-(defn login-form []
-  (form-to {:rel "external" :data-ajax "false"}
-           [:post "/login"]
-           [:button {:type "submit"} "login with twitter"]))
-
-
-(defn logout-form []
-  (form-to {:rel "external" :data-ajax "false"}
-           [:post "/logout"]
-           [:button {:type "submit"} "logout"]))
 
 
 (defn index-get [req]
