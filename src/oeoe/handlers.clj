@@ -13,8 +13,27 @@
   (:import java.util.Calendar))
 
 
+;; utilities
+
+
 (defn logged-in []
   (:logged-in (get-session)))
+
+
+(defn make-creds [req]
+  (let [{:keys [oauth_token oauth_token_secret]} (get-in req [:session :access-token])]
+    (make-oauth-creds *app-consumer-key*
+                      *app-consumer-secret*
+                      oauth_token
+                      oauth_token_secret)))
+
+
+(defn current-status [user-id]
+  (-> (show-user :params {:user_id user-id})
+      (get-in [:body :status :text])))
+
+
+;; handlers
 
 
 (defn index-get [req]
@@ -32,19 +51,6 @@
      :footer [(if (logged-in)
                 (logout-form)
                 (login-form))]}))
-
-
-(defn make-creds [req]
-  (let [{:keys [oauth_token oauth_token_secret]} (get-in req [:session :access-token])]
-    (make-oauth-creds *app-consumer-key*
-                      *app-consumer-secret*
-                      oauth_token
-                      oauth_token_secret)))
-
-
-(defn current-status [user-id]
-  (-> (show-user :params {:user_id user-id})
-      (get-in [:body :status :text])))
 
 
 (defn index-post [req]
