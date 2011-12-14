@@ -16,7 +16,7 @@
     (let [{:keys [title header content footer]} content
           header (if header `[:div {:data-role "header"} ~@header])
           content (if content `[:div {:data-role "content"} ~@content])
-          footer (if footer `[:div {:data-role "footer"} ~@footer])]
+          footer (if footer `[:div {:data-role "footer" :data-position "fixed"} ~@footer])]
       `[:div {:data-role "page" :data-title ~title}
         ~header
         ~content
