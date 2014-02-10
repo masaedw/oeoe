@@ -6,6 +6,8 @@
                  [ring "1.2.1"]
                  [twitter-api "1.0.0"]
                  [mongoika "0.8.7"]]
-  :dev-dependencies [[lein-ring "0.4.5"]]
+  :plugins [[lein-ring "0.8.10"]]
   :ring {:handler oeoe.core/oeoe-site}
-  )
+  :profiles
+  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                        [ring-mock "0.1.5"]]}})
