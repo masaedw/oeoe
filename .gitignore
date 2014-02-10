@@ -7,3 +7,5 @@
 /checkouts
 /.lein-deps-sum
 config.clj
+.nrepl-port
+target
